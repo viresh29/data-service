@@ -1,1 +1,11 @@
-# config for api, database etc..
+{
+    "AWS": {
+        "BUCKET": "landing-club-ingestion"
+    },
+    "SNOWFLAKE": {
+        "ACCOUNT": "DEV",
+        "DATABASE": "DEV",
+        "USER": "DEV",
+        "WAREHOUSE": "DEV"
+    }
+}
