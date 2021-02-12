@@ -42,8 +42,8 @@ class CsvToDF:
     #         hour=0, minute=0, second=0, microsecond=0)
     #     to_date = from_date + timedelta(days=1)
     #     return from_date, to_date
-
-    def replace_df_to_csv(self, dataframe, from_date, to_date):
+    # @TODO add the logic here to get the data from file or api using from and to dates to get periodically updates
+    def replace_df_to_csv(self, dataframe):
         return dataframe.to_csv(index=False)
 
     def file_format(self, from_date, to_date):
@@ -52,7 +52,7 @@ class CsvToDF:
     def execute(self, execution_date):
         from_date, to_date = self.get_current_date(execution_date)
         df = pd.read_csv(self.file_path)
-        csv = self.replace_df_to_csv(df, from_date, to_date)
+        csv = self.replace_df_to_csv(df)
         file = self.file_format(csv, from_date, to_date)
 
         self.s3.upload_file_to_s3_with_hook(filename=file)
@@ -97,6 +97,7 @@ class SnowflakeCsvUpload:
         if not self.connection_status:
             logging.info('Connection is not established.')
             self._establish_conn_with_db()
+            logging.info('Connection is established')
 
         logging.info('Performing new query to snowflake')
 
@@ -130,7 +131,6 @@ class SnowflakeCsvUpload:
         except Exception:
             raise ValueError('SQL statement include syntax errors.')
 
-
     @logging_decorator
     def execute(self, table_name, task_id, file_format='STANDARDCSVFORMAT', **kwargs):
         ti = kwargs['ti']
@@ -138,11 +138,6 @@ class SnowflakeCsvUpload:
             task_ids=task_id)
 
         logging.info("FileName - {}".format(file_name))
-
-        if file_name == 'skip':
-            logging.warning(
-                'Time change is happening. Task is going to be skipped as well.')
-            return
 
         dml_instruction = ['USE DATABASE "{}"'.format(
             self.db_structure.get('DATABASE'))]
