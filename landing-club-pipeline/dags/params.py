@@ -3,11 +3,7 @@ import json
 import logging
 import pathlib
 from os import path
-
-
-class ConfigError(Exception):
-    def __init__(self, message):
-        self.errors = message
+from exceptions import ConfigError
 
 
 def get_json_config(path_to_file):
@@ -37,7 +33,7 @@ config = get_json_config(full_path)
 SCHEDULE_INTERVAL = timedelta(minutes=5)
 
 DEFAULT_ARGS = {
-    'owner': 'WH',
+    'owner': 'Airflow',
     'depends_on_past': True,
     'start_date': datetime(2021, 2, 10, 7, 0).isoformat(),
 }

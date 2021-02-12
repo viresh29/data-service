@@ -6,3 +6,8 @@ class s3DataUploaderException(Exception):
 class snowflakeException(Exception):
     def __init__(self, msg):
         self.msg = msg
+
+
+class ConfigError(Exception):
+    def __init__(self, msg):
+        self.errors = msg
