@@ -1,7 +1,8 @@
 import logging
 import snowflake.connector
 from airflow.hooks.S3_hook import S3Hook
-from decorators import (s3_retry_decorator, snowflake_retry_decorator, logging_decorator)
+from decorators import (
+    s3_retry_decorator, snowflake_retry_decorator, logging_decorator)
 import pandas as pd
 
 
@@ -21,7 +22,8 @@ class CsvToS3:
         self.hook.load_file(filename=filename,
                             bucket_name=self.bucket_name, replace=True)
 
-        logging.info('Csv {} uploaded to s3 bucket {}'.format(filename, self.bucket_name))
+        logging.info('Csv {} uploaded to s3 bucket {}'.format(
+            filename, self.bucket_name))
         return filename
 
 
@@ -33,7 +35,8 @@ class CsvToDF:
         self.from_date = from_date
         self.to_date = to_date
         self.file_name = file_name
-        self.s3 = CsvToS3(bucket_name=bucket_name, timeout_counter=timeout_counter, timeout_sleep=timeout_sleep)
+        self.s3 = CsvToS3(bucket_name=bucket_name,
+                          timeout_counter=timeout_counter, timeout_sleep=timeout_sleep)
 
     # @TODO use from and to dates to filter the data where ever we get from
 
@@ -56,6 +59,7 @@ class CsvToDF:
         file = self.file_format(csv, from_date, to_date)
 
         self.s3.upload_file_to_s3_with_hook(filename=file)
+        # return file name for next task to pick up.
         return file
 
 

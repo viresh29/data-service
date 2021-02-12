@@ -27,7 +27,8 @@ def join_path(source_path, relative_path):
 
 curr_path = get_current_path()
 rel_path = 'config/dev.json'
-full_path = join_path(source_path=curr_path.replace('dags', ''), relative_path=rel_path)
+full_path = join_path(source_path=curr_path.replace(
+    'dags', ''), relative_path=rel_path)
 config = get_json_config(full_path)
 
 SCHEDULE_INTERVAL = timedelta(minutes=5)
