@@ -1,11 +1,18 @@
 {
     "AWS": {
-        "BUCKET": "landing-club-ingestion"
+        "BUCKET": "landing-club-ingestion",
+        "s3_connection_id": "",
+        "TIMEOUT_COUNTER": 3,
+        "TIMEOUT_SLEEP": 30
     },
     "SNOWFLAKE": {
         "ACCOUNT": "DEV",
         "DATABASE": "DEV",
         "USER": "DEV",
-        "WAREHOUSE": "DEV"
-    }
+        "WAREHOUSE": "DEV",
+        "TIMEOUT_COUNTER": 3,
+        "TIMEOUT_SLEEP": 30
+    },
+    "file_path": "",
+    "file_name": ""
 }
